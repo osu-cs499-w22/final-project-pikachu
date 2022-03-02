@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 
 import { Global, css, jsx } from "@emotion/react";
 
@@ -8,7 +9,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const globalStyles = css`
-  @import "open-props/style";
+  /* ! FONT NOT WORKING CURRENTLY */
+  @font-face {
+    font-family: "Arcade";
+    src: url("src/fonts/Arcade.ttf");
+  }
 
   body {
     margin: 0;
@@ -20,7 +25,9 @@ const globalStyles = css`
 ReactDOM.render(
   <React.StrictMode>
     <Global styles={globalStyles} />
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
