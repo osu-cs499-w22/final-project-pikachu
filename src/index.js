@@ -3,16 +3,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
+import arcade from "./fonts/Arcade.ttf";
+
 import { Global, css, jsx } from "@emotion/react";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const globalStyles = css`
-  /* ! FONT NOT WORKING CURRENTLY */
   @font-face {
     font-family: "Arcade";
-    src: url("src/fonts/Arcade.ttf");
+    src: url(${arcade});
   }
 
   body {

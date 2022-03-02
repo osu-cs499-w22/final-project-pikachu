@@ -11,16 +11,21 @@ const styles = css`
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(3, 1fr);
-  font-family: "Arcade", sans-serif; // ! NOT WORKING CURRENTLY
+  font-family: "Arcade", sans-serif;
 
   div {
     text-align: center;
     font-size: x-large;
+    color: black;
     padding: 1em;
     background-color: #7caafa;
     border: 0.1em solid black;
     border-radius: 3px;
     box-shadow: inset -0.2em -0.25em 0.1em #6666ff;
+  }
+
+  a {
+    text-decoration: none;
   }
 
   .active,
