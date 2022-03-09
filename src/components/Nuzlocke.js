@@ -33,6 +33,7 @@ export function Nuzlocke(){
             if(responseVersionJSON.pokemon_entries){
                 setDataNuzlocke(responseVersionJSON.pokemon_entries);
                 setError(false);
+                setLoading(false);
             }
         }
         catch(e){

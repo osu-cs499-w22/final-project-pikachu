@@ -38,6 +38,7 @@ export function MoveReturn(){
             if(pokemonResponseJSON){
                 setDataPokemon(pokemonResponseJSON);
                 setError(false);
+                setLoading(false);
             }
         }
         catch(e){
@@ -58,7 +59,7 @@ export function MoveReturn(){
         <div>
             <h1>Pokemon Moves Route(placeholder title)</h1>
             <FormMoves pokemon={pokemon} setPokemon={setPokemon} version={version} setVersion={setVersion}/>
-            <DisplayMoves dataPokemon={dataPokemon} version={version}/>
+            <DisplayMoves dataPokemon={dataPokemon.map} version={version}/>
         </div>
     )
 }
