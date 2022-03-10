@@ -6,7 +6,11 @@ import { NavLink } from "react-router-dom";
 import { css, jsx } from "@emotion/react";
 
 const styles = css`
-  width: fit-content;
+  position: relative;
+  top: 35%;
+  left: 20%;
+
+  width: 40%;
   margin: 0 auto;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
