@@ -6,12 +6,7 @@ import { NavLink } from "react-router-dom";
 import { css, jsx } from "@emotion/react";
 
 const styles = css`
-  position: relative;
-  top: 35%;
-  left: 20%;
-
-  width: 40%;
-  margin: 0 auto;
+  width: 15%;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(3, 1fr);
@@ -43,7 +38,7 @@ const styles = css`
 
 const Navbar = () => {
   return (
-    <div css={styles}>
+    <div className='navbar' css={styles}>
       <NavLink to='/'>
         <div>Home</div>
       </NavLink>
