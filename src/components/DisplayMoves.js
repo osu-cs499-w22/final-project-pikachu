@@ -7,10 +7,10 @@ export function DisplayMoves(props){
     const [dataMoves, setDataMoves] = useState([]);
     const [dataVersion, setDataVersion] = useState('');
     const [pokemonType, setPokemonType] = useState([]);
-    const [pokemonAnimation, setPokemonAnimation] = useState([]);
+    const [pokemonSprite, setPokemonSprite] = useState([]);
     const [moveType, setMoveType] = useState([]);
     const [pokemonName, setPokemonName] = useState('');
-    
+    const [pokemonGeneration, setPokemonGeneration] = useState('')
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -21,6 +21,7 @@ export function DisplayMoves(props){
     setDataVersion(props.version);
     setPokemonType(props.dataPokemon.types);
     setPokemonName(props.dataPokemon.name);
+    setPokemonSprite(props.dataPokemon.sprites);
     
     
     const getMoveTypeRequest = async(move)=>{
@@ -59,10 +60,34 @@ export function DisplayMoves(props){
             }
         }
     }
+    useEffect(()=>{
+        getMoveTypeRequest(move)
+    }, [move])
     
     return(
         <div>
-            
+            <h1>
+                {pokemonName}
+            </h1>
+            {Object.keys(dataMoves).forEact(array=>{
+                array.map((item)=>{
+                    {
+                        <div>
+                            {item.name}
+                        </div>
+                    }
+                })
+            })}
+            <div>
+                {Object.keys(pokemonSprite.other.versions).forEach(array=>{
+                    array.map((item)=>{
+                        {
+                            item[pokemonGeneration][dataVersion]
+                        }
+
+                    })
+                })}
+            </div>
         </div>
     )
     

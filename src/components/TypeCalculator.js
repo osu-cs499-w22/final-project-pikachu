@@ -59,7 +59,8 @@ export function typeCalculator(type1, type2){
         getTypeMatchupOffense(type1Holder);
     },[type1Holder]);
     
-    /* Return works such that it returns a div that contains the matching type and corresponding array */
+    /* Return works such that it returns a div that contains the matching type and corresponding array. I'm trying to make it
+    such that it doesn't return a div but instead returns the necessary information back to the component that calls it*/
 
     return(
         <div>

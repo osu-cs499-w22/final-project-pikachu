@@ -5,8 +5,10 @@ import { FormMoves } from "./FormMoves";
 import { DisplayMoves } from "./DisplayMoves";
 
 export function MoveReturn(){
+
     const [pokemon, setPokemon] = useState('');
     const [version, setVersion] = useState('');
+    const [generation, setGeneration] = useState('');
 
     const [dataPokemon, setDataPokemon] = useState([]);
 
@@ -58,8 +60,8 @@ export function MoveReturn(){
     return(
         <div>
             <h1>Pokemon Moves Route(placeholder title)</h1>
-            <FormMoves pokemon={pokemon} setPokemon={setPokemon} version={version} setVersion={setVersion}/>
-            <DisplayMoves dataPokemon={dataPokemon.map} version={version}/>
+            <FormMoves pokemon={pokemon} setPokemon={setPokemon} version={version} setVersion={setVersion} generation={generation} setGeneration={setGeneration}/>
+            <DisplayMoves dataPokemon={dataPokemon} version={version} generation={generation}/>
         </div>
     )
 }
