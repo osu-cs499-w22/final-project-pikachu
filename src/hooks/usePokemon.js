@@ -13,7 +13,6 @@ export function usePokemon(pokemon) {
 
   const getPokemon = async (pokemon) => {
     if (!pokemon) {
-      setMoveType([]);
       setLoading(true);
       setError(false);
       return;
@@ -24,11 +23,7 @@ export function usePokemon(pokemon) {
       const pokemonDataJSON = await fetch(urlMoveType);
       const pokemonData = await pokemonDataJSON.json();
 
-      if (
-        moveTypeResponseJSON["cod"] === "404" ||
-        moveTypeResponseJSON["cod"] === "401"
-      ) {
-        setMoveType([]);
+      if (pokemonData["cod"] === "404" || pokemonData["cod"] === "401") {
         setError(true);
         setLoading(false);
         return;
@@ -36,7 +31,7 @@ export function usePokemon(pokemon) {
 
       if (pokemonData) {
         setDataMoves(pokemonData.moves);
-        setPokemonName(pokemonName);
+        setPokemonName(pokemon);
         setPokemonType(pokemonData.types);
         setPokemonSprite(pokemonData.sprites);
         setError(false);
@@ -51,13 +46,13 @@ export function usePokemon(pokemon) {
     }
   };
   useEffect(() => {
-    getMoveTypeRequest(pokemon);
+    getPokemon(pokemon);
   }, [pokemon]);
 
   return [
     {
       moves: dataMoves,
-      version: dataVersion,
+      name: pokemonName,
       type: pokemonType,
       sprite: pokemonSprite,
     },
