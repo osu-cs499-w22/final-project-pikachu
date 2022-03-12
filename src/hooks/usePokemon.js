@@ -1,39 +1,28 @@
-/** @jsxImportSource @emotion/react */
 import { React, useState, useEffect } from "react";
-import { css, jsx } from "@emotion/react";
 
-export function usePokemon(pokemonName) {
+export function usePokemon(pokemon) {
   const [dataMoves, setDataMoves] = useState([]);
-  const [dataVersion, setDataVersion] = useState("");
+  const [pokemonName, setPokemonName] = useState("");
   const [pokemonType, setPokemonType] = useState([]);
   const [pokemonSprite, setPokemonSprite] = useState([]);
-  const [moveType, setMoveType] = useState([]);
-  const [pokemonName, setPokemonName] = useState("");
-  const [pokemonGeneration, setPokemonGeneration] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   //https://pokeapi.co/api/v2/pokemon/{id or name}/
 
-  setDataMoves(props.dataPokemon.moves);
-  setDataVersion(props.version);
-  setPokemonType(props.dataPokemon.types);
-  setPokemonName(props.dataPokemon.name);
-  setPokemonSprite(props.dataPokemon.sprites);
-
-  const getMoveTypeRequest = async (move) => {
-    if (!move) {
+  const getPokemon = async (pokemon) => {
+    if (!pokemon) {
       setMoveType([]);
+      setLoading(true);
+      setError(false);
       return;
     }
-    setLoading(true);
-    setError(false);
 
     try {
-      const urlMoveType = `https://pokeapi.co/api/v2/pokemon/${move}/`;
-      const moveTypeResponse = await fetch(urlMoveType);
-      const moveTypeResponseJSON = await moveTypeResponse.json();
+      const urlMoveType = `https://pokeapi.co/api/v2/pokemon/${pokemon}/`;
+      const pokemonDataJSON = await fetch(urlMoveType);
+      const pokemonData = await pokemonDataJSON.json();
 
       if (
         moveTypeResponseJSON["cod"] === "404" ||
@@ -42,26 +31,37 @@ export function usePokemon(pokemonName) {
         setMoveType([]);
         setError(true);
         setLoading(false);
-
         return;
       }
 
-      if (moveTypeResponseJSON) {
-        setMoveType(moveTypeResponseJSON.type);
+      if (pokemonData) {
+        setDataMoves(pokemonData.moves);
+        setPokemonName(pokemonName);
+        setPokemonType(pokemonData.types);
+        setPokemonSprite(pokemonData.sprites);
         setError(false);
         setLoading(false);
       }
     } catch (e) {
       if (e instanceof DOMException) {
-        console.log("==HTTP request cancelled");
+        console.log("== HTTP request cancelled");
       } else {
         throw e;
       }
     }
   };
   useEffect(() => {
-    getMoveTypeRequest(move);
-  }, [move]);
+    getMoveTypeRequest(pokemon);
+  }, [pokemon]);
 
-  return;
+  return [
+    {
+      moves: dataMoves,
+      version: dataVersion,
+      type: pokemonType,
+      sprite: pokemonSprite,
+    },
+    loading,
+    error,
+  ];
 }
