@@ -13,11 +13,11 @@ export function usePokemon(pokemon) {
 
   const getPokemon = async (pokemon) => {
     if (!pokemon) {
-      setLoading(true);
-      setError(false);
       return;
     }
 
+    setLoading(true);
+    setError(false);
     try {
       const urlMoveType = `https://pokeapi.co/api/v2/pokemon/${pokemon}/`;
       const pokemonDataJSON = await fetch(urlMoveType);
