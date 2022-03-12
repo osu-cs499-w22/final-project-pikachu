@@ -1,0 +1,69 @@
+Moves Page:
+
+  user enters 1 pokemon:                   machamp
+
+  get the type of the pokemon,             fighting,      .../pokemon, usePokemon
+
+  get all types that this type is weak to  flying, ...    useDamageRelation
+
+  for every type its weak to, find the                    useDamageRelation       at this point we will know what type of moves the pokemon should learn if possible
+  moves that those types are weak to
+
+  look for moves that pokemon x can learn that match the types
+
+  -- display to the user a list of moves that the pokemon they entered can learn that combat its weaknesses.
+
+
+Growth:
+  user enters 1 pokemon, get pokemon species           ....         usePokemon
+
+  get the species growth rate                 fast, medium-slow...  useGrowthRate
+
+  return the growth rate to the user
+
+
+Nuzlocke:
+  user inputs a type, game version, generation is inferred/calculated
+  get every pokemon in that game                                     useGames
+  for each pokemon, get its type, (and maybe encounter id if time)   usePokemon
+
+  if time:
+    for any pokemon that matches in type, get its encounter areas    useEncounters(encounter id)
+
+  any pokemon that matches the type the user entered is displayed 
+  if time: also display the encounter info
+
+Settings:
+  - color of pokedex/background
+  - light mode / dark mode
+  - Clear data 
+
+// consider redux
+Favorites Page:
+  --...
+
+
+
+
+Hooks: 
+  usePokemon(pokemon_name: string) -> a pokemon JSON object
+
+  useDamageRelation(type: string) -> a damage relation object for that type.
+
+  useGrowthRate(pokemon_species: string) -> growth rate of that species (should be same for all pokemon of that species)
+
+  useGames(version) -> array of pokemon
+
+  useEncounters(encounter group/id) -> array of locations
+
+
+
+
+
+
+
+
+
+
+
+

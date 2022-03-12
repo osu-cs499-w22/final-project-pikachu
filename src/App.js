@@ -16,6 +16,13 @@ import Indicator from "./components/graphics/Indicator";
 import leftBackground from "./pokedexLeft.png";
 import rightBackgrond from "./pokedexRight.png";
 
+const colors = {
+  red: "none",
+  blue: "hue-rotate(250deg) brightness(100%);",
+  green: "hue-rotate(150deg) brightness(100%);",
+  yellow: "hue-rotate(60deg) brightness(175%)",
+};
+
 const styles = css`
   background-color: black;
   height: 100vh;
@@ -25,6 +32,8 @@ const styles = css`
 
   .left {
     background-image: url(${leftBackground});
+    // make this depend on context/state
+    filter: ${colors.red};
     background-size: 95%;
     background-repeat: no-repeat;
     /* width: 60vw; */
@@ -36,6 +45,8 @@ const styles = css`
 
   .right {
     background-image: url(${rightBackgrond});
+    // make this depend on context/state
+    filter: ${colors.red};
     background-size: 95%;
     background-repeat: no-repeat;
     /* width: 40vw; */
