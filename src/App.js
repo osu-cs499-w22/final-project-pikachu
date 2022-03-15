@@ -36,11 +36,33 @@ const styles = css`
     filter: ${colors.red};
     background-size: 95%;
     background-repeat: no-repeat;
-    /* width: 60vw; */
     height: 95%;
     position: relative;
     left: 1.5em;
     flex: 1 1 60%;
+
+    .indicator {
+      margin: 2.5em 0 0 2.5em;
+    }
+
+    .screen {
+      width: 75%;
+      height: 50%;
+      background-color: white;
+      position: relative;
+      top: 5%;
+      left: 8%;
+      border: 5px solid black;
+    }
+
+    .icons {
+      position: relative;
+      top: 10%;
+      margin: 0 auto;
+      width: 90%;
+
+      display: flex;
+    }
   }
 
   .right {
@@ -49,21 +71,10 @@ const styles = css`
     filter: ${colors.red};
     background-size: 95%;
     background-repeat: no-repeat;
-    /* width: 40vw; */
     height: 85%;
     position: relative;
     right: 3.5em;
     flex: 1 1 40%;
-  }
-
-  .screen {
-    width: 75%;
-    height: 50%;
-    background-color: white;
-    position: relative;
-    top: 25%;
-    left: 8%;
-    border: 5px solid black;
   }
 
   .navbar {
@@ -77,6 +88,7 @@ function App() {
   return (
     <div css={styles}>
       <div className='left'>
+        <Indicator />
         <Routes>
           <Route path='/' element={<div className='screen'></div>} />
           <Route path='/moves' element={<MovesPage />} />
@@ -85,6 +97,9 @@ function App() {
           <Route path='/growth' element={<GrowthPage />} />
           <Route path='/settings' element={<SettingsPage />} />
         </Routes>
+        <div className='icons'>
+          <img src='https://img.icons8.com/ios-glyphs/100/000000/xbox-cross.png' />
+        </div>
       </div>
       <div className='right'>
         <Navbar />

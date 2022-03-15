@@ -6,8 +6,8 @@ import { css, jsx } from "@emotion/react";
 
 const Indicator = () => {
   const styles = css`
-    width: 6em;
-    height: 6em;
+    width: 4.5em;
+    height: 4.5em;
     background-color: white;
     border-radius: 50%;
     border: 4px solid black;
@@ -17,8 +17,8 @@ const Indicator = () => {
     align-items: center;
 
     .inner {
-      width: 5em;
-      height: 5em;
+      width: 3.5em;
+      height: 3.5em;
       background-color: #3197cc;
       border: 4px solid black;
       border-radius: 50%;
