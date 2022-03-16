@@ -15,6 +15,8 @@ import Indicator from "./components/graphics/Indicator";
 
 import leftBackground from "./pokedexLeft.png";
 import rightBackgrond from "./pokedexRight.png";
+import Lights from "./components/graphics/Lights";
+import IconBar from "./components/graphics/IconBar";
 
 const colors = {
   red: "none",
@@ -43,6 +45,12 @@ const styles = css`
 
     .indicator {
       margin: 2.5em 0 0 2.5em;
+    }
+
+    .lights {
+      position: fixed;
+      left: 15em;
+      top: 5em;
     }
 
     .screen {
@@ -89,6 +97,7 @@ function App() {
     <div css={styles}>
       <div className='left'>
         <Indicator />
+        <Lights />
         <Routes>
           <Route path='/' element={<div className='screen'></div>} />
           <Route path='/moves' element={<MovesPage />} />
@@ -98,7 +107,7 @@ function App() {
           <Route path='/settings' element={<SettingsPage />} />
         </Routes>
         <div className='icons'>
-          <img src='https://img.icons8.com/ios-glyphs/100/000000/xbox-cross.png' />
+          <IconBar />
         </div>
       </div>
       <div className='right'>
