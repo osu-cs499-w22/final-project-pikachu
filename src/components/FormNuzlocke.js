@@ -3,6 +3,8 @@ import { React, useState, useEffect } from "react";
 import { css, jsx } from "@emotion/react";
 
 export function FormNuzlocke(props) {
+  const [currVersion, setCurrVersion] = useState("red-blue");
+
   return (
     <div>
       <form
@@ -14,7 +16,11 @@ export function FormNuzlocke(props) {
         }}
       >
         <fieldset>
-          <select name='version' id='version'>
+          <select
+            name='version'
+            id='version'
+            onChange={(e) => setCurrVersion(e.target.value)}
+          >
             <optgroup label='generation-i'>
               <option value='red-blue'>Red-Blue</option>
               <option value='yellow'>Yellow</option>
@@ -59,13 +65,22 @@ export function FormNuzlocke(props) {
             <option value='flying'>Flying</option>
             <option value='psychic'>Psychic</option>
             <option value='ghost'>Ghost</option>
-            <option value='dark'>Dark</option>
-            <option value='steel'>Steel</option>
+            {currVersion !== "red-blue" && currVersion !== "yellow" && (
+              <>
+                <option value='dark'>Dark</option>
+                <option value='steel'>Steel</option>
+              </>
+            )}
             <option value='bug'>Bug</option>
             <option value='normal'>Normal</option>
             <option value='dragon'>Dragon</option>
             <option value='ice'>Ice</option>
-            <option value='fairy'>Fairy</option>
+            {(currVersion === "x-y" ||
+              currVersion === "omega-ruby-alpha-sapphire" ||
+              currVersion === "sun-moon" ||
+              currVersion === "ultra-sun-ultra-moon") && (
+              <option value='fairy'>Fairy</option>
+            )}
           </select>
           <button type='Submit'>Submit</button>
         </fieldset>
