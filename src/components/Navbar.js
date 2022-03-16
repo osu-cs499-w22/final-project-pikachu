@@ -18,9 +18,9 @@ const styles = css`
     color: black;
     padding: 1em;
     background-color: #7caafa;
-    border: 0.1em solid black;
-    border-radius: 3px;
-    box-shadow: inset -0.2em -0.25em 0.1em #6666ff;
+    border: 3px solid black;
+    border-radius: 5px;
+    box-shadow: inset -0.2em -0.25em 2px #6666dd;
   }
 
   a {

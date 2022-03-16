@@ -17,6 +17,8 @@ import leftBackground from "./pokedexLeft.png";
 import rightBackgrond from "./pokedexRight.png";
 import Lights from "./components/graphics/Lights";
 import IconBar from "./components/graphics/IconBar";
+import StatusButton from "./components/graphics/StatusButton";
+import RightIcons from "./components/graphics/rightIcons";
 
 const colors = {
   red: "none",
@@ -83,12 +85,18 @@ const styles = css`
     position: relative;
     right: 3.5em;
     flex: 1 1 40%;
-  }
 
-  .navbar {
-    position: relative;
-    top: 20%;
-    left: 10%;
+    .navbar {
+      position: relative;
+      top: 20%;
+      left: 10%;
+    }
+
+    .right-icon-bar {
+      position: relative;
+      top: 15em;
+      left: 3em;
+    }
   }
 `;
 
@@ -112,6 +120,7 @@ function App() {
       </div>
       <div className='right'>
         <Navbar />
+        <RightIcons />
       </div>
     </div>
   );
