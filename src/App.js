@@ -7,7 +7,7 @@ import { css, jsx } from "@emotion/react";
 import "open-props/style";
 import Navbar from "./components/Navbar";
 import MovesPage from "./pages/MovesPage";
-import BreedingPage from "./pages/BreedingPage";
+import FavoritesPage from "./pages/FavoritesPage";
 import NuzlockePage from "./pages/NuzlockePage";
 import GrowthPage from "./pages/GrowthPage";
 import SettingsPage from "./pages/SettingsPage";
@@ -17,7 +17,6 @@ import leftBackground from "./pokedexLeft.png";
 import rightBackgrond from "./pokedexRight.png";
 import Lights from "./components/graphics/Lights";
 import IconBar from "./components/graphics/IconBar";
-import StatusButton from "./components/graphics/StatusButton";
 import RightIcons from "./components/graphics/rightIcons";
 
 const colors = {
@@ -109,7 +108,7 @@ function App() {
         <Routes>
           <Route path='/' element={<div className='screen'></div>} />
           <Route path='/moves' element={<MovesPage />} />
-          <Route path='/breeding' element={<BreedingPage />} />
+          <Route path='/favorites' element={<FavoritesPage />} />
           <Route path='/nuzlocke' element={<NuzlockePage />} />
           <Route path='/growth' element={<GrowthPage />} />
           <Route path='/settings' element={<SettingsPage />} />

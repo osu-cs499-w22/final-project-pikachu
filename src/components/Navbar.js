@@ -47,8 +47,8 @@ const Navbar = () => {
         <div>Moves</div>
       </NavLink>
 
-      <NavLink to='/breeding'>
-        <div>Breeding</div>
+      <NavLink to='/favorites'>
+        <div>Favorites</div>
       </NavLink>
 
       <NavLink to='/nuzlocke'>
