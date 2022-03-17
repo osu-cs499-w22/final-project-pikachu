@@ -47,7 +47,10 @@ export function usePokemonByVersion(group, type) {
             var types = responseData.types.map((item) => item.type.name);
             for (const currType of types) {
               if (currType === type) {
-                matchingPokemon.push(pokemon);
+                matchingPokemon.push({
+                  name: pokemon,
+                  sprites: responseData.sprites,
+                });
                 break;
               }
             }
