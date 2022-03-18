@@ -1,83 +1,69 @@
 import { React, useState, useEffect } from "react";
 
-export function usePokemonByVersion(group, type) {
+export function usePokemonByVersion(version, type) {
   const [pokemonArray, setPokemonArray] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const getPokemonByVersion = async (group, type) => {
-      if (!group) {
-        return;
-      }
-
+    let ignore = false;
+    const controller = new AbortController();
+    const getPokemonByVersion = async () => {
+      let responseData = {};
       setLoading(true);
-      setError(false);
       try {
-        let response = await fetch(
-          `https://pokeapi.co/api/v2/version-group/${group}`
+        var response = await fetch(
+          `https://pokeapi.co/api/v2/version-group/${version}`
         );
-        let responseData = await response.json();
 
-        if (response.status === 404 || response.status === 401) {
-          setError(true);
-          setLoading(false);
-          return;
-        }
-
-        const pokedexURL = responseData.pokedexes[0].url;
-
-        response = await fetch(pokedexURL);
         responseData = await response.json();
 
-        const allPokemon = [];
-        responseData.pokemon_entries.forEach((item) => {
-          allPokemon.push(item.pokemon_species.name);
-        });
-
-        const matchingPokemon = [];
-        allPokemon.forEach(async (pokemon) => {
-          response = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/${pokemon}/`
-          );
-          responseData = await response.json();
-
-          if (responseData) {
-            var types = responseData.types.map((item) => item.type.name);
-            for (const currType of types) {
-              if (currType === type) {
-                matchingPokemon.push({
-                  name: pokemon,
-                  sprites: responseData.sprites,
-                });
-                break;
-              }
-            }
-          }
-        });
-
-        if (response.status === 404 || response.status === 401) {
+        if (!responseData.pokedexes[0].url) {
           setError(true);
           setLoading(false);
+          setPokemonArray([]);
           return;
         }
 
-        if (responseData) {
-          setPokemonArray(matchingPokemon);
-          setError(false);
-          setLoading(false);
-        }
+        let generation = responseData.generation.name;
+
+        response = await fetch(`${responseData.pokedexes[0].url}`);
+        responseData = await response.json();
       } catch (e) {
         if (e instanceof DOMException) {
           console.log("== HTTP request cancelled");
         } else {
+          setLoading(false);
+          setError(true);
           throw e;
         }
       }
+      if (!ignore) {
+        setLoading(false);
+        setError(false);
+        try {
+          setPokemonArray(responseData.pokemon_entries || []);
+        } catch (e) {
+          if (
+            responseData.error.status === 401 ||
+            responseData.error.message === "The access token expired"
+          ) {
+            setError("Access token expired");
+          }
+          console.log("== Error: ", e);
+          setPokemonArray([]);
+        }
+      }
     };
-    if (group) getPokemonByVersion(group, type);
-  }, [group, type]);
+    if (version && type) getPokemonByVersion(version, type);
+
+    return () => {
+      setLoading(false);
+      controller.abort();
+      ignore = true;
+    };
+  }, [version, type, pokemonArray.length]);
 
   return [pokemonArray, loading, error];
 }

@@ -5,30 +5,110 @@ import { css, jsx } from "@emotion/react";
 
 import { FormNuzlocke } from "../components/FormNuzlocke";
 import { usePokemonByVersion } from "../hooks/usePokemonByVersion";
+import { useSpecies } from "../hooks/useSpecies";
+
+const styles = css`
+  display: flex;
+  flex-direction: column;
+
+  .sprite {
+    object-fit: contain;
+  }
+
+  .page-selectors {
+    margin: auto auto 1em auto;
+  }
+`;
 
 const NuzlockePage = () => {
   const [version, setVersion] = useState("");
   const [type, setType] = useState("");
+  const [generation, setGeneration] = useState("");
   const [currEntry, setCurrEntry] = useState(0);
 
-  const [pokemonList, loading, error] = usePokemonByVersion(version, type);
-  console.log(pokemonList);
-  let currPokemon = pokemonList[0];
-  if (currPokemon) console.log(currPokemon);
+  const [pokemonArray, loading, error] = usePokemonByVersion(version, type);
+  const [pokemonSpecies, loadingSpecies, errorSpecies] = useSpecies(
+    pokemonArray,
+    type
+  );
 
-  console.log(currPokemon);
+  var gens = {
+    "red-blue": "generation-i",
+    yellow: "generation-i",
+    "gold-silver": "generation-ii",
+    crystal: "generation-ii",
+    "ruby-sapphire": "generation-iii",
+    emerald: "generation-iii",
+    "firered-leafgreen": "generation-iii",
+    "diamond-pearl": "generation-iv",
+    platinum: "generation-iv",
+    "heartgold-soulsilver": "generation-iv",
+    "black-white": "generation-v",
+    "black-2-white-2": "generation-v",
+    "x-y": "generation-vi",
+    "omega-ruby-alpha-sapphire": "generation-vi",
+    "sun-moon": "generation-vii",
+    "ultra-sun-ultra-moon": "generation-vii",
+  };
+  let pokemon = pokemonSpecies[currEntry];
   return (
-    <div className='screen'>
-      <FormNuzlocke setVersion={setVersion} setType={setType} />
-      {pokemonList[currEntry] ? (
-        <img
-          src={`${currPokemon.sprites.front_default}`}
-          width='500'
-          height='600'
-        />
-      ) : (
-        "null"
+    <div css={styles} className='screen'>
+      <h2>Nuzlocke</h2>
+      <FormNuzlocke
+        setGeneration={setGeneration}
+        setVersion={setVersion}
+        setType={setType}
+      />
+
+      {!loadingSpecies && !errorSpecies && pokemonSpecies.length > 0 && (
+        <div
+          css={css`
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            height: 40%;
+          `}
+        >
+          <img
+            className='sprite'
+            src={pokemon.sprites.versions[gens[version]][version].front_default}
+          />
+          <div className='info'>
+            <h3>
+              {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+            </h3>
+            <ul>
+              <li>
+                Type(s):
+                <ul>
+                  {pokemon.types.map((typeObj) => (
+                    <li key={typeObj.type.name}>{typeObj.type.name}</li>
+                  ))}
+                </ul>
+              </li>
+              <li>Weight: {pokemon.weight} </li>
+              <li>Height: {pokemon.height} </li>
+            </ul>
+          </div>
+        </div>
       )}
+      <div className='page-selectors'>
+        <button
+          onClick={() => setCurrEntry((prev) => (prev > 0 ? prev - 1 : 0))}
+        >
+          Previous
+        </button>
+        {currEntry + 1}
+        <button
+          onClick={() =>
+            setCurrEntry((prev) =>
+              prev < pokemonSpecies.length - 1 ? prev + 1 : prev
+            )
+          }
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
