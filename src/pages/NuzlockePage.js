@@ -12,6 +12,7 @@ const NuzlockePage = ({ addFav }) => {
     display: flex;
     flex-direction: column;
     text-align: center;
+    font-size: 1.1em;
 
     fieldset {
       border: none;
@@ -64,7 +65,7 @@ const NuzlockePage = ({ addFav }) => {
   let pokemon = pokemonSpecies[currEntry];
   return (
     <div css={styles} className='screen'>
-      <h2>Nuzlocke</h2>
+      <h1>Nuzlocke</h1>
       <FormNuzlocke
         setGeneration={setGeneration}
         setVersion={setVersion}
@@ -72,62 +73,65 @@ const NuzlockePage = ({ addFav }) => {
       />
 
       {!loadingSpecies && !errorSpecies && pokemonSpecies.length > 0 && (
-        <div
-          css={css`
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            height: 60%;
-          `}
-        >
-          <img
-            className='sprite'
-            src={pokemon.sprites.versions[gens[version]][version].front_default}
-          />
-          <div className='info'>
-            <h3>
-              {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
-            </h3>
-            <ul>
-              <li>
-                Type(s):
-                <ul>
-                  {pokemon.types.map((typeObj) => (
-                    <li key={typeObj.type.name}>{typeObj.type.name}</li>
-                  ))}
-                </ul>
-              </li>
-              <li>Weight: {pokemon.weight} </li>
-              <li>Height: {pokemon.height} </li>
-            </ul>
-            <button
-              onClick={() => {
-                setAddedAsFav(true);
-                addFav((prev) => [...prev, pokemon]);
-              }}
-              className='add-fav'
-              disabled={addedAsFav}
-            >
-              Add to Favorites
-            </button>
+        <>
+          <div
+            css={css`
+              display: flex;
+              flex-direction: row;
+              justify-content: space-evenly;
+              height: 60%;
+            `}
+          >
+            <img
+              className='sprite'
+              src={
+                pokemon.sprites.versions[gens[version]][version].front_default
+              }
+            />
+            <div className='info'>
+              <h3>
+                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+              </h3>
+              <ul>
+                <li>
+                  Type(s):
+                  <ul>
+                    {pokemon.types.map((typeObj) => (
+                      <li key={typeObj.type.name}>{typeObj.type.name}</li>
+                    ))}
+                  </ul>
+                </li>
+                <li>Weight: {pokemon.weight} </li>
+                <li>Height: {pokemon.height} </li>
+              </ul>
+              <button
+                onClick={() => {
+                  setAddedAsFav(true);
+                  addFav((prev) => [...prev, pokemon]);
+                }}
+                className='add-fav'
+              >
+                Add to Favorites
+              </button>
+            </div>
           </div>
-        </div>
+          <div className='page-selectors'>
+            <img
+              onClick={() => setCurrEntry((prev) => (prev > 0 ? prev - 1 : 0))}
+              src='https://img.icons8.com/ios-glyphs/30/000000/chevron-left.png'
+            />
+            Page: {currEntry + 1}
+            <img
+              onClick={() =>
+                setCurrEntry((prev) =>
+                  prev < pokemonSpecies.length - 1 ? prev + 1 : prev
+                )
+              }
+              src='https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png'
+            />
+          </div>
+        </>
       )}
-      <div className='page-selectors'>
-        <img
-          onClick={() => setCurrEntry((prev) => (prev > 0 ? prev - 1 : 0))}
-          src='https://img.icons8.com/ios-glyphs/30/000000/chevron-left.png'
-        />
-        Page: {currEntry + 1}
-        <img
-          onClick={() =>
-            setCurrEntry((prev) =>
-              prev < pokemonSpecies.length - 1 ? prev + 1 : prev
-            )
-          }
-          src='https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png'
-        />
-      </div>
     </div>
   );
 };

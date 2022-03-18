@@ -8,7 +8,7 @@ import Bars from "./Bars";
 import WhiteButtons from "./WhiteButtons";
 
 const styles = css`
-  width: 95%;
+  width: 100%;
   display: flex;
 
   .red-button {
@@ -25,7 +25,7 @@ const styles = css`
   .bars {
     position: relative;
     bottom: 6em;
-    left: 1em;
+    right: 1em;
   }
 
   .status-button {

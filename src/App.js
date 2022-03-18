@@ -37,7 +37,7 @@ function App() {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-
+    font-family: Arcade;
     .left {
       background-image: url(${leftBackground});
       filter: ${colors[`${selectedColor}`]};
@@ -86,7 +86,7 @@ function App() {
       height: 85%;
       position: relative;
       right: 3.5em;
-      flex: 1 1 40%;
+      flex: 1 1 50%;
 
       .navbar {
         position: relative;

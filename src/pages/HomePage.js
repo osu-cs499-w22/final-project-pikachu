@@ -6,7 +6,7 @@ import { css, jsx } from "@emotion/react";
 const HomePage = () => {
   const styles = css`
     text-align: center;
-
+    font-size: 1.35em;
     h3,
     h2 {
       margin: 3em;

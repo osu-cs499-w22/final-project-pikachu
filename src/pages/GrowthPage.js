@@ -10,7 +10,7 @@ const styles = css`
   text-align: center;
 
   .exp-chart {
-    height: 68%;
+    height: 63%;
   }
 
   .input-container {
@@ -31,7 +31,8 @@ const styles = css`
       border-left: none;
       border-right: none;
       border-bottom: 3px solid black;
-      font-size: 1.5em;
+      font-size: 2em;
+      font-family: Arcade;
     }
 
     input:focus {
@@ -62,12 +63,11 @@ const GrowthPage = () => {
 
   return (
     <div css={styles} className='screen'>
-      <h3>Pokemon Growth Rates!</h3>
+      <h1>Pokemon Growth Rates!</h1>
       <div className='exp-chart'>
-        {!loading &&
-          !error &&
-          !growthRate.hasOwnProperty("levels") &&
-          "Enter a Pokemon to check its Growth Rate!"}
+        {!loading && !error && !growthRate.hasOwnProperty("levels") && (
+          <h2>Enter a Pokemon to check its Growth Rate! </h2>
+        )}
         {!loading &&
           !error &&
           growthRate &&

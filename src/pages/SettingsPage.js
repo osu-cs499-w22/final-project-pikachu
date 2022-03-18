@@ -1,8 +1,35 @@
+/** @jsxImportSource @emotion/react */
+
 import React from "react";
+import { css, jsx } from "@emotion/react";
 
 const SettingsPage = ({ changeColor }) => {
+  const styles = css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h1 {
+      font-size: xx-large;
+      margin-bottom: 3em;
+    }
+
+    label {
+      margin: 1em;
+      font-size: x-large;
+    }
+
+    select {
+      width: 40%;
+      font-size: large;
+    }
+  `;
+
   return (
-    <div className='screen'>
+    <div css={styles} className='screen'>
+      <h1>Settings</h1>
+      <label htmlFor='color'>Pokedex Color</label>
       <select
         name='color'
         id='color'

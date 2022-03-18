@@ -6,11 +6,12 @@ import FavoriteCard from "../components/FavoritesCard";
 
 const styles = css`
   text-align: center;
+  font-size: x-large;
 
   & > div {
     display: flex;
     flex-flow: row wrap;
-    max-height: 80%;
+    max-height: 75%;
     overflow-y: scroll;
   }
 `;
@@ -18,7 +19,7 @@ const styles = css`
 const FavoritesPage = ({ favorites }) => {
   return (
     <div css={styles} className='screen'>
-      <h3>Favorites</h3>
+      <h2>Favorites</h2>
       {favorites.length > 0 ? (
         <div>
           {favorites.map((pokemon) => (
