@@ -7,34 +7,35 @@ import { FormNuzlocke } from "../components/FormNuzlocke";
 import { usePokemonByVersion } from "../hooks/usePokemonByVersion";
 import { useSpecies } from "../hooks/useSpecies";
 
-const styles = css`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-
-  fieldset {
-    border: none;
+const NuzlockePage = ({ addFav }) => {
+  const styles = css`
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-  }
+    flex-direction: column;
+    text-align: center;
 
-  .sprite {
-    object-fit: contain;
-  }
+    fieldset {
+      border: none;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
 
-  .page-selectors {
-    margin: auto auto 1em auto;
-    display: flex;
-    align-items: center;
-  }
-`;
+    .sprite {
+      object-fit: contain;
+    }
 
-const NuzlockePage = () => {
+    .page-selectors {
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+  `;
+
   const [version, setVersion] = useState("");
   const [type, setType] = useState("");
   const [generation, setGeneration] = useState("");
   const [currEntry, setCurrEntry] = useState(0);
+  const [addedAsFav, setAddedAsFav] = useState(false);
 
   const [pokemonArray, loading, error] = usePokemonByVersion(version, type);
   const [pokemonSpecies, loadingSpecies, errorSpecies] = useSpecies(
@@ -76,7 +77,7 @@ const NuzlockePage = () => {
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
-            height: 40%;
+            height: 60%;
           `}
         >
           <img
@@ -99,6 +100,16 @@ const NuzlockePage = () => {
               <li>Weight: {pokemon.weight} </li>
               <li>Height: {pokemon.height} </li>
             </ul>
+            <button
+              onClick={() => {
+                setAddedAsFav(true);
+                addFav((prev) => [...prev, pokemon]);
+              }}
+              className='add-fav'
+              disabled={addedAsFav}
+            >
+              Add to Favorites
+            </button>
           </div>
         </div>
       )}

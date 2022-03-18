@@ -22,6 +22,7 @@ import { useState } from "react";
 
 function App() {
   const [selectedColor, setSelectedColor] = useState("red");
+  const [favPokemons, setFavPokemons] = useState([]);
 
   const colors = {
     red: "none",
@@ -109,8 +110,14 @@ function App() {
         <Routes>
           <Route path='/' element={<div className='screen'></div>} />
           <Route path='/moves' element={<MovesPage />} />
-          <Route path='/favorites' element={<FavoritesPage />} />
-          <Route path='/nuzlocke' element={<NuzlockePage />} />
+          <Route
+            path='/favorites'
+            element={<FavoritesPage favorites={favPokemons} />}
+          />
+          <Route
+            path='/nuzlocke'
+            element={<NuzlockePage addFav={setFavPokemons} />}
+          />
           <Route path='/growth' element={<GrowthPage />} />
           <Route
             path='/settings'
