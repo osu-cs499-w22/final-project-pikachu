@@ -10,43 +10,62 @@ export function usePokemon(pokemon) {
   const [error, setError] = useState(false);
 
   //https://pokeapi.co/api/v2/pokemon/{id or name}/
+  useEffect(() => {
+    let ignore = false;
+    const controller = new AbortController();
 
-  const getPokemon = async (pokemon) => {
-    if (!pokemon) {
-      return;
-    }
+    const getPokemon = async () => {
+      let responseData = {};
+      setLoading(true);
+      try {
+        const urlMoveType = `https://pokeapi.co/api/v2/pokemon/${pokemon}/`;
+        var response = await fetch(urlMoveType);
+        responseData = await response.json();
 
-    setLoading(true);
-    setError(false);
-    try {
-      const urlMoveType = `https://pokeapi.co/api/v2/pokemon/${pokemon}/`;
-      const pokemonDataJSON = await fetch(urlMoveType);
-      const pokemonData = await pokemonDataJSON.json();
+        if (response["cod"] === "404" || response["cod"] === "401") {
+          setError(true);
+          setLoading(false);
+          setPokemonName("");
+          setPokemonSprite([]);
+          setPokemonType([]);
+          setDataMoves([]);
+          return;
+        }
 
-      if (pokemonData["cod"] === "404" || pokemonData["cod"] === "401") {
-        setError(true);
-        setLoading(false);
-        return;
+        if (responseData) {
+          setDataMoves(responseData.moves || []);
+          setPokemonName(pokemon);
+          setPokemonType(responseData.types || []);
+          setPokemonSprite(responseData.sprites || []);
+          setError(false);
+          setLoading(false);
+        }
+      } catch (e) {
+        if (e instanceof DOMException) {
+          console.log("== HTTP request cancelled");
+        } else {
+          setLoading(false);
+          setError(true);
+          throw e;
+        }
       }
 
-      if (pokemonData) {
-        setDataMoves(pokemonData.moves);
+      if (!ignore) {
+        setDataMoves(responseData.moves);
         setPokemonName(pokemon);
-        setPokemonType(pokemonData.types);
-        setPokemonSprite(pokemonData.sprites);
+        setPokemonType(responseData.types);
+        setPokemonSprite(responseData.sprites);
         setError(false);
         setLoading(false);
       }
-    } catch (e) {
-      if (e instanceof DOMException) {
-        console.log("== HTTP request cancelled");
-      } else {
-        throw e;
-      }
-    }
-  };
-  useEffect(() => {
-    getPokemon(pokemon);
+    };
+    if (pokemon) getPokemon();
+
+    return () => {
+      setLoading(false);
+      controller.abort();
+      ignore = true;
+    };
   }, [pokemon]);
 
   return [
