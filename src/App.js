@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import { Route, Routes } from "react-router-dom";
-
+import { useState } from "react";
 import { css, jsx } from "@emotion/react";
+import { Route, Routes } from "react-router-dom";
 
 import "open-props/style";
 import Navbar from "./components/Navbar";
@@ -18,7 +18,7 @@ import rightBackgrond from "./pokedexRight.png";
 import Lights from "./components/graphics/Lights";
 import IconBar from "./components/graphics/IconBar";
 import RightIcons from "./components/graphics/rightIcons";
-import { useState } from "react";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const [selectedColor, setSelectedColor] = useState("red");
@@ -108,7 +108,7 @@ function App() {
         <Indicator />
         <Lights />
         <Routes>
-          <Route path='/' element={<div className='screen'></div>} />
+          <Route path='/' element={<HomePage />} />
           <Route path='/moves' element={<MovesPage />} />
           <Route
             path='/favorites'
