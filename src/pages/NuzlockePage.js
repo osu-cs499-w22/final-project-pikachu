@@ -10,6 +10,14 @@ import { useSpecies } from "../hooks/useSpecies";
 const styles = css`
   display: flex;
   flex-direction: column;
+  text-align: center;
+
+  fieldset {
+    border: none;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 
   .sprite {
     object-fit: contain;
@@ -17,6 +25,8 @@ const styles = css`
 
   .page-selectors {
     margin: auto auto 1em auto;
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -93,21 +103,19 @@ const NuzlockePage = () => {
         </div>
       )}
       <div className='page-selectors'>
-        <button
+        <img
           onClick={() => setCurrEntry((prev) => (prev > 0 ? prev - 1 : 0))}
-        >
-          Previous
-        </button>
-        {currEntry + 1}
-        <button
+          src='https://img.icons8.com/ios-glyphs/30/000000/chevron-left.png'
+        />
+        Page: {currEntry + 1}
+        <img
           onClick={() =>
             setCurrEntry((prev) =>
               prev < pokemonSpecies.length - 1 ? prev + 1 : prev
             )
           }
-        >
-          Next
-        </button>
+          src='https://img.icons8.com/ios-glyphs/30/000000/chevron-right.png'
+        />
       </div>
     </div>
   );
