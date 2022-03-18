@@ -6,40 +6,44 @@ export const useGrowthRate = (pokemon) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const getGrowthRate = async (pokemon) => {
-      if (!pokemon) {
-        return;
-      }
-
+    let ignore = false;
+    const controller = new AbortController();
+    const getGrowthRate = async () => {
+      let responseBody = {};
       setLoading(true);
-      setError(false);
       try {
         let response = await fetch(
           `https://pokeapi.co/api/v2/pokemon-species/${pokemon}`
         );
-        let responseData = await response.json();
+        responseBody = await response.json();
 
-        if (response.status === 404 || response.status === 401) {
+        if (!responseBody.growth_rate.url) {
           setError(true);
           setLoading(false);
+          setGrowthRateInfo({});
+          console.error(
+            `ERROR: Growth rate url is undefined for pokemon ${pokemon}`
+          );
           return;
         }
 
-        const growthRateURL = responseData.growth_rate.url;
+        response = await fetch(responseBody.growth_rate.url);
+        responseBody = await response.json();
 
-        response = await fetch(growthRateURL);
-        responseData = await response.json();
-
-        if (response.status === 404 || response.status === 401) {
-          setError(true);
+        if (!responseBody.name && !responseBody.levels) {
           setLoading(false);
+          setError(true);
+          setGrowthRateInfo({});
+          console.error(
+            `ERROR: Growth rate info is undefined for pokemon ${pokemon}`
+          );
           return;
         }
 
-        if (responseData) {
+        if (responseBody) {
           setGrowthRateInfo({
-            name: responseData.name,
-            levels: responseData.levels,
+            name: responseBody.name,
+            levels: responseBody.levels,
           });
           setError(false);
           setLoading(false);
@@ -51,8 +55,22 @@ export const useGrowthRate = (pokemon) => {
           throw e;
         }
       }
+      if (!ignore) {
+        setGrowthRateInfo({
+          name: responseBody.name,
+          levels: responseBody.levels,
+        });
+        setError(false);
+        setLoading(false);
+      }
     };
     if (pokemon) getGrowthRate(pokemon);
+
+    return () => {
+      setLoading(false);
+      controller.abort();
+      ignore = true;
+    };
   }, [pokemon]);
 
   return [growthRateInfo, loading, error];
