@@ -1,14 +1,14 @@
 import { React, useState, useEffect } from "react";
 
-export function usePokemonByVersion(group, type) {
+export function usePokemonByVersion(version, type) {
   const [pokemonArray, setPokemonArray] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const getPokemonByVersion = async (group, type) => {
-      if (!group) {
+    const getPokemonByVersion = async (version, type) => {
+      if (!version) {
         return;
       }
 
@@ -16,7 +16,7 @@ export function usePokemonByVersion(group, type) {
       setError(false);
       try {
         let response = await fetch(
-          `https://pokeapi.co/api/v2/version-group/${group}`
+          `https://pokeapi.co/api/v2/version-group/${version}`
         );
         let responseData = await response.json();
 
@@ -25,7 +25,7 @@ export function usePokemonByVersion(group, type) {
           setLoading(false);
           return;
         }
-
+        let generation = responseData.generation.name;
         const pokedexURL = responseData.pokedexes[0].url;
 
         response = await fetch(pokedexURL);
@@ -45,11 +45,14 @@ export function usePokemonByVersion(group, type) {
 
           if (responseData) {
             var types = responseData.types.map((item) => item.type.name);
+            if (version === "gold-silver") version = "gold";
             for (const currType of types) {
               if (currType === type) {
                 matchingPokemon.push({
                   name: pokemon,
-                  sprites: responseData.sprites,
+                  sprites:
+                    responseData.sprites.versions[generation][version]
+                      .front_default,
                 });
                 break;
               }
@@ -76,8 +79,8 @@ export function usePokemonByVersion(group, type) {
         }
       }
     };
-    if (group) getPokemonByVersion(group, type);
-  }, [group, type]);
+    if (version && type) getPokemonByVersion(version, type);
+  }, [version, type]);
 
   return [pokemonArray, loading, error];
 }

@@ -11,21 +11,21 @@ const NuzlockePage = () => {
   const [type, setType] = useState("");
   const [currEntry, setCurrEntry] = useState(0);
 
-  const [pokemonList, loading, error] = usePokemonByVersion(version, type);
-  console.log(pokemonList);
-  let currPokemon = pokemonList[0];
-  if (currPokemon) console.log(currPokemon);
+  const [pokemonArray, loading, error] = usePokemonByVersion(version, type);
 
-  console.log(currPokemon);
+  console.log(typeof pokemonArray.length);
+
+  if (pokemonArray.length > 0) console.log("this condition is true");
   return (
     <div className='screen'>
       <FormNuzlocke setVersion={setVersion} setType={setType} />
-      {pokemonList[currEntry] ? (
+      {pokemonArray.length > 0 ? (
+        // just for testing, replace with pokemonList[currEntry].sprites
         <img
-          src={`${currPokemon.sprites.front_default}`}
-          width='500'
-          height='600'
-        />
+          src={"http://placekitten.com/480/480"}
+          width='300'
+          alt='none'
+        ></img>
       ) : (
         "null"
       )}
