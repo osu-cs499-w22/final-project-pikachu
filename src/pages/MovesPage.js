@@ -13,24 +13,16 @@ const MovesPage = () => {
   const [version, setVersion] = useState('');
   const [dataPokemon, loading, error] = usePokemon(pokemon.toLowerCase());
   console.log(dataPokemon);
-  /*if(dataPokemon.type){
-      console.log(dataPokemon.type[0].type.name)
+ /* if(dataPokemon.length > 0){
+      console.log(dataPokemon.type[0].type.name!=null)
   }*/
  // const [damageData1, loadingDamage1, errorDamage1] = useDamageRelations(dataPokemon.type[0].type.name);
-
+  
   
 
   return(
     <div className='screen'>
       <FormMoves pokemon={pokemon} setPokemon={setPokemon} version={version} setVersion={setVersion}/>
-      {(dataPokemon) ? 
-        <div></div> 
-        
-        
-        
-        : null
-
-      }
     </div>
 
   )
