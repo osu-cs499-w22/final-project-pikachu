@@ -1,10 +1,12 @@
 import { React, useState, useEffect } from "react";
 
-export function usePokemon(pokemon) {
+export function usePokemon(pokemon, version) {
   const [dataMoves, setDataMoves] = useState([]);
   const [pokemonName, setPokemonName] = useState("");
   const [pokemonType, setPokemonType] = useState([]);
   const [pokemonSprite, setPokemonSprite] = useState([]);
+  const [wantedMoves, setWantedMoves] = useState([]);
+
 
   const [weakType, setWeakType] = useState([]);
   const [strongType, setStrongType] = useState([])
@@ -121,10 +123,7 @@ export function usePokemon(pokemon) {
       if (strong["code"] === "404" || strong["code"] === "401") {
         setError(true);
         setLoading(false);
-        setPokemonName("");
-        setPokemonSprite([]);
-        setPokemonType([]);
-        setDataMoves([]);
+        
         return;
       }
 
@@ -145,6 +144,7 @@ export function usePokemon(pokemon) {
 
     }})}
 
+    
 
     if (weakType) getType();
 
@@ -155,11 +155,59 @@ export function usePokemon(pokemon) {
     };
   }, [weakType]);
 
-  
+  useEffect(() => {
+    let ignore = false;
+    const controller = new AbortController();
+    const getMoves = async()=>{
+    dataMoves.forEach(async(moves)=>{
+  //   console.log(moves);
+    let wantedMoveData = {};
+    setLoading(true);
+   // console.log(moves.move.name);
+    try {
+      const urlWMD = `https://pokeapi.co/api/v2/move/${moves.move.name}/`;
+      var WMD = await fetch(urlWMD);
+      wantedMoveData = await WMD.json();
+      //console.log(wantedMoveData.type.name);
+      if (WMD["code"] === "404" || WMD["code"] === "401") {
+        setError(true);
+        setLoading(false);
+        return;
+      }
+      console.log(strongType)
+      strongType.forEach((type)=>{
+        console.log(type.name)
+        console.log(type.name === wantedMoveData.type.name)
+        if(type.name===wantedMoveData.type.name){
+          setWantedMoves((prev)=>[...prev, ...wantedMoveData]
+          )
+        }
+      })
+    } catch (e) {
+      if (e instanceof DOMException) {
+        console.log("== HTTP request cancelled");
+      } else {
+        setLoading(false);
+        setError(true);
+        throw e;
+      }
+    }
+    if (!ignore) {
+
+    }})}
+    if (dataMoves) getMoves();
+
+    return () => {
+      setLoading(false);
+      controller.abort();
+      ignore = true;
+    };
+  }, [dataMoves]);
 
 
 //  console.log(weakType);
-  console.log(strongType);
+//  console.log(strongType);
+//  console.log(wantedMoves);
   return [
     {
       moves: dataMoves,

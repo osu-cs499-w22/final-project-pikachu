@@ -11,7 +11,7 @@ const MovesPage = () => {
 
   const [pokemon, setPokemon] = useState('');
   const [version, setVersion] = useState('');
-  const [dataPokemon, loading, error] = usePokemon(pokemon.toLowerCase());
+  const [dataPokemon, loading, error] = usePokemon(pokemon.toLowerCase(), version);
   console.log(dataPokemon);
  /* if(dataPokemon.length > 0){
       console.log(dataPokemon.type[0].type.name!=null)
