@@ -1,17 +1,85 @@
+/** @jsxImportSource @emotion/react */
+
 import React, { useState } from "react";
+import { css, jsx } from "@emotion/react";
+
 import { useGrowthRate } from "../hooks/useGrowthRate";
+import Graph from "../components/Graph";
+
+const styles = css`
+  text-align: center;
+
+  .exp-chart {
+    height: 68%;
+  }
+
+  .input-container {
+    width: 100%;
+
+    img {
+      margin: 0;
+      height: 100%;
+    }
+
+    * {
+      margin: 0;
+    }
+
+    input {
+      width: 75%;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 3px solid black;
+      font-size: 1.5em;
+    }
+
+    input:focus {
+      outline: none;
+    }
+  }
+`;
 
 const GrowthPage = () => {
   const [pokemon, setPokemon] = useState("");
   const [query, setQuery] = useState("");
 
   const [growthRate, loading, error] = useGrowthRate(query);
-  console.log(growthRate);
+
+  if (growthRate.hasOwnProperty("levels") && growthRate.levels.length > 0) {
+    var data = [
+      {
+        id: "exp",
+        color: "blue",
+        data: growthRate.levels.map((obj) => ({
+          x: obj.level,
+          y: obj.experience,
+        })),
+      },
+    ];
+    console.log(data);
+  }
 
   return (
-    <div className='screen'>
-      <input onChange={(e) => setPokemon(e.target.value)} type='text' />
-      <button onClick={() => setQuery(pokemon)}>Search</button>
+    <div css={styles} className='screen'>
+      <h3>Pokemon Growth Rates!</h3>
+      <div className='exp-chart'>
+        {!loading &&
+          !error &&
+          !growthRate.hasOwnProperty("levels") &&
+          "Enter a Pokemon to check its Growth Rate!"}
+        {!loading &&
+          !error &&
+          growthRate &&
+          growthRate.hasOwnProperty("levels") && <Graph data={data} />}
+      </div>
+      <div className='input-container'>
+        <input onChange={(e) => setPokemon(e.target.value)} type='text' />
+        <img
+          onClick={() => setQuery(pokemon)}
+          src='https://img.icons8.com/ios-filled/50/000000/arrow.png'
+        />
+      </div>
     </div>
   );
 };

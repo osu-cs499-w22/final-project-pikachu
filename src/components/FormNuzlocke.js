@@ -16,6 +16,7 @@ export function FormNuzlocke(props) {
         }}
       >
         <fieldset>
+          <label htmlFor=''>Game Version </label>
           <select
             name='version'
             id='version'
@@ -54,6 +55,7 @@ export function FormNuzlocke(props) {
               <option value='ultra-sun-ultra-moon'>Ultra Sun-Ultra Moon</option>
             </optgroup>
           </select>
+          <label htmlFor='type'>Pokemon Type</label>
           <select name='type' id='type'>
             <option value='grass'>Grass</option>
             <option value='fire'>Fire</option>
