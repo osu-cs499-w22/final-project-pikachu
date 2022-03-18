@@ -29,7 +29,7 @@ export function usePokemon(pokemon) {
         return;
       }
 
-      if (pokemonData) {
+      if(pokemonData) {
         setDataMoves(pokemonData.moves);
         setPokemonName(pokemon);
         setPokemonType(pokemonData.types);
